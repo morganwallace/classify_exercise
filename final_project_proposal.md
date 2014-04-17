@@ -1,15 +1,3 @@
-#classify_exercise
-
----
-
-This repository contains the scripts and documents for the *UC Berkeley School of Information* [Spring 2014 Data Mining](http://www.ischool.berkeley.edu/courses/i290t-dma) class' final project.
-
-**Author: ** Morgan Wallace
-
-***Below is the proposal for this project***
-
----
-
 ## Final Project Proposal
 ---
 **Morgan Wallace**
