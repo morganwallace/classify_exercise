@@ -61,14 +61,13 @@ GitHub, Python, iPython and the following Python libraries:
 I will be using the wearable devices as sources of data for the test, training and holdout datasets.
 
 ##Project Plan
-* By April 11th:
+* By April 20th:
 
-	1. segment dataset into training, test, and holdout.
+	1. segment dataset into training, test (holdout set will be created later with device).
 	2. research and estimate which 3 classifiers will provide the best results.
-* by April 16th:
-	1. Add any last data to data set
-	2. Uncover preliminary feature sets through visualization and observation
-	3. Take first stab at implementing code on at least 1 classification method
+* by April 21th:
+	1. Uncover preliminary feature sets through visualization and observation
+	2. Take first stab at implementing code on at least 1 classification method
 * by April 23rd
 	1. 3 working classification tools
 * by April 30th
