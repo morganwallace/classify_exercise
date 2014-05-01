@@ -5,7 +5,7 @@ import csv
 def get_all(pickled=False, get_columns_only=False, to_csv=False):
 	all_data=[]
 	labels=[]
-	dir_name=os.path.join('..','saved_animations_and_data')
+	dir_name=os.path.join('saved_animations_and_data')
 	sample_sets=os.listdir(dir_name)
 	for sample_set in sample_sets:
 		if sample_set[0]!= '.':
@@ -25,19 +25,25 @@ def get_all(pickled=False, get_columns_only=False, to_csv=False):
 					f.readline()#get rid of the header row
 				for line in f:
 					row=line.split(",")
+					if len(row)==1: continue
+					# print row
 					row[2]=int(row[2])
+
 					row[3:]=[float(i) for i in row[3:]]
 					all_data.append(row)
 	if pickled==True:
-		pickle.dump(all_data,open("all_samples.p","wb"))
+		pickle.dump(all_data,open("all_samples_new.p","wb"))
 	if to_csv== True:
-		with open("all_samples.csv",'wb') as output_csv:
+		with open("all_samples_new.csv",'wb') as output_csv:
 			writer=csv.writer(output_csv)
 			for line in all_data:
 				writer.writerow(line)
 	return all_data
 
 
+# def label():
+	
+
 if __name__ == '__main__':
-	# get_all()
-	print get_all(get_columns_only=True)
+	get_all(pickled=True)
+	# print get_all(get_columns_only=True)

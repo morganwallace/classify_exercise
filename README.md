@@ -8,7 +8,7 @@ This repository contains the scripts and documents for the *UC Berkeley School o
 
 ***Below is the proposal for this project***
 
----
+
 
 ## Final Project Proposal
 ---
