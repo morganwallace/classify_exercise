@@ -16,14 +16,17 @@ from ast import literal_eval
 samples=[]
 
 
-    # else: yield data_gen()
+# else: yield data_gen()
 # data_gen.t = 0
 
 
 
-userName="Roy"
+userName="Morgan"
 # userName= raw_input("userName: ")
-exerciseType="shoulder"
+
+# for i in sensors:
+
+exerciseType="tricep"
 #set up maximum allowed time for exercise 
 max_time=25
 
