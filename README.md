@@ -51,11 +51,13 @@ For a much more in-depth look at my data so far, please view one of my iPython n
 GitHub, Python, iPython and the following Python libraries:
 
 * sklearn 
+* numpy
 * matplotlib 
 * mpld3
 * seaborn
 * pandas
 * numpy
+* pyserial
 
 #####Other
 I will be using the wearable devices as sources of data for the test, training and holdout datasets.
