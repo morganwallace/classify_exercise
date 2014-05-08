@@ -45,7 +45,7 @@ For a much more in-depth look at my data so far, please view one of my iPython n
 
 **rep_tracker_svc.py** implements the SVC for real-time data coming from a Hercubit device.
 
-
+**hercubit/** directory is a package of scrips used for connected to a hercubit device
 
 #####Software
 GitHub, Python, iPython and the following Python libraries:
