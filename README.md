@@ -39,11 +39,11 @@ Each repitition is made up of samples which are taken every 0.1 seconds and have
 
 For a much more in-depth look at my data so far, please view one of my iPython notebooks:
 
-* notebooks/SVC.ipynb - *SVC classifier build and testing*
-* notebooks/Machine Learning.ipynb - *Initial data prep and exploration*
+* notebooks/SVC.ipynb - *SVC classifier build and testing* - also online here: <http://nbviewer.ipython.org/github/morganwallace/classify_exercise/blob/master/notebooks/SVC.ipynb>
+* notebooks/Machine Learning.ipynb - *Initial data prep and exploration* - also online here: <http://nbviewer.ipython.org/github/morganwallace/classify_exercise/blob/master/notebooks/Machine%20Learning%20-%20Free%20Weights.ipynb>
 
- 
-<http://nbviewer.ipython.org/gist/morganwallace/9966432>
+
+**rep_tracker_svc.py** implements the SVC for real-time data coming from a Hercubit device.
 
 
 
