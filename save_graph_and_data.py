@@ -21,12 +21,12 @@ samples=[]
 
 
 
-userName="Morgan"
+userName="Sidney"
 # userName= raw_input("userName: ")
 
 # for i in sensors:
 
-exerciseType="tricep"
+exerciseType="shoulder"
 #set up maximum allowed time for exercise 
 max_time=25
 
@@ -101,6 +101,12 @@ def save(all_data,tdata):
     plt.savefig(picpath,dpi=200)
     pickle.dump(samples,open(os.path.join(dirname,filename+".p"),"wb"))
     with open(join(dirname,filename+".csv"),"wb") as csvFile:
+        writer=csv.writer(csvFile)
+        writer.writerow(['User','exerciseType','rep_count',"t (sec)","acc_x","acc_y","acc_z","gyro_x","gyro_y","gyro_z","magnet_x","magnet_y","magnet_z"]) #header
+        for i in samples:
+            writer.writerow((i))
+    #save in data directory for fast adding to training set
+    with open(join('data',"new_training.csv"),"wb") as csvFile:
         writer=csv.writer(csvFile)
         writer.writerow(['User','exerciseType','rep_count',"t (sec)","acc_x","acc_y","acc_z","gyro_x","gyro_y","gyro_z","magnet_x","magnet_y","magnet_z"]) #header
         for i in samples:
