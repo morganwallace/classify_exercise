@@ -21,12 +21,12 @@ samples=[]
 
 
 
-userName="Sidney"
+userName="Morgan"
 # userName= raw_input("userName: ")
 
 # for i in sensors:
 
-exerciseType="shoulder"
+exerciseType="bicep curls"
 #set up maximum allowed time for exercise 
 max_time=25
 
@@ -72,17 +72,18 @@ for sensor in sensors:
 
 
 
-# variables for saving
-now = time.strftime("%Y-%m-%d__%H-%M-%S")
-dirname=join("saved_animations_and_data",now+"_"+exerciseType+"_"+userName)
-filename=now+"_"+exerciseType
-os.mkdir(dirname)
+
 def save(all_data,tdata):
     '''Save csv and png of sampled data
     '''
     global dirname, sensors, axes, userName,ser
     global filename
-
+    # variables for saving
+    now = time.strftime("%Y-%m-%d__%H-%M-%S")
+    dirname=join("saved_animations_and_data",now+"_"+exerciseType+"_"+userName)
+    filename=now+"_"+exerciseType
+    os.mkdir(dirname)
+    time.sleep(.5)
     #samples should equal list of tuples of the data
     samples=[]
     for i in range(len(tdata)):
@@ -137,7 +138,9 @@ def run(data):
     #MOVING WINDOW
     xmin, xmax = ax[0].get_xlim()
     if t>=max_time:
+        # Disable save for submission to Data Mining 290
         save(all_data,tdata)
+        # quit()
 
 
     return None
@@ -147,11 +150,14 @@ def run(data):
 #     new_ticks[i]= new_ticks[i]/2
 # plt.xticks(list(plt.xticks()[0]) + new_ticks)
 
+from hercubit.device import connect
+ser,conn_type=connect()
 
-# ser,conn_type=connect()
-# gen=sensor_stream(ser,conn_type)
-# while True:
-#     run(gen.next())
-ani = animation.FuncAnimation(fig, run, sensor_stream, blit=False, interval=100, repeat=False)
+def gen():
+    global ser, conn_type
+    g=sensor_stream(ser,conn_type)
+    while True:
+        yield g.next()
+ani = animation.FuncAnimation(fig, run, gen, blit=False, interval=100, repeat=False)
 
 plt.show()

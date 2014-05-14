@@ -16,6 +16,6 @@ from platform import system
 ######  Peak Detection Preference Variables  ######
 sampleRate=.100 #this should match the rate from the code on Arduino
 max_rep_window=5 #seconds
-min_rep_window=.4 #seconds
+min_rep_window=.5 #seconds
 initialize_time=1 #second
 dominant_axis=3

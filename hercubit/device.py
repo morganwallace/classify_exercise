@@ -17,6 +17,9 @@ SERIAL_PORTS=['/dev/tty.HC-06-DevB-2']
 
 def connect(bluetooth_enabled=True,SERIAL_PORTS=SERIAL_PORTS,allow_archive=False):
     conn_type=""
+    #override for submission to Data Mining 290
+    bluetooth_enabled=False
+
     if system()== 'Darwin': # Mac OSX
         
         ### FIRST TRY USB
@@ -78,18 +81,12 @@ def connect(bluetooth_enabled=True,SERIAL_PORTS=SERIAL_PORTS,allow_archive=False
         # import pickle
         print "\nNo serial connection available. Falling back on archived data..."
         conn_type="archive"
-        backup_path=os.path.join('Python viz','saved_animations_and_data','backup','2014-03-14__15-36-14_bicep curl.csv')
+        backup_path=os.path.join('data','backup.csv')
         print backup_path
-        if os.getcwd()[os.getcwd().rfind('/'):]=='/Website2':   
-            archive=os.path.join(os.path.dirname(os.getcwd()),backup_path)
-            ser=open(archive)
-        else:
-            archive=os.getcwd()
-            while archive[archive.rfind('/'):] != '/Fitness-Tracking':
-                archive=os.path.dirname(archive)    
-            archive=os.path.join(archive,backup_path)
-            ser=open(archive)
-        print archive
+          
+        archive=os.path.join(os.getcwd(),backup_path)
+        ser=open(archive)
+
     return ser, conn_type
 
 
@@ -151,7 +148,7 @@ def sensor_stream(ser,conn_type,sensor="all", simulate_sample_rate=True):
 def run():
     """Use this code as the starting point 
     in scripts that import this module"""
-    ser,conn_type=connect()
+    ser,conn_type=connect(bluetooth_enabled=False)
     sensor_generator=sensor_stream(ser,conn_type)
     while True:    
         print sensor_generator.next()

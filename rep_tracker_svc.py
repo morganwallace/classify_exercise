@@ -160,6 +160,12 @@ def live_peaks(sample,debug=False,dataset='archive',lookahead=4,elim_first_value
         import matplotlib.pyplot as plt
         import pylab as pl
 
+    # If no reps have been detected only look at last 5 seconds which is the max_rep_window
+    if len(t)*settings.sampleRate>settings.max_rep_window:
+        new_index=-1*int(settings.max_rep_window/settings.sampleRate) 
+        adjust_time(new_index)
+    
+
     #time - (although, it's considered the 'x' axis in the peak detection function
     t.append(sample['time'])
     
@@ -176,6 +182,9 @@ def live_peaks(sample,debug=False,dataset='archive',lookahead=4,elim_first_value
     magnet_y.append(sample['magnet'][1])
     magnet_z.append(sample['magnet'][2])
 
+    # Don't bother looking for reps unless sufficient time has passed since last rep
+    if len(t)*settings.sampleRate<settings.min_rep_window:
+        return None
 
     #Don't even look for peaks unless a min_rep_window worth of time has passed
     if len(t)<settings.min_rep_window/settings.sampleRate: return None
@@ -183,7 +192,7 @@ def live_peaks(sample,debug=False,dataset='archive',lookahead=4,elim_first_value
     x_peaks=peakdetect(x,t,lookahead=lookahead,delta=deltas['acc'])
     y_peaks=peakdetect(y,t,lookahead=lookahead,delta=deltas['acc'])
     z_peaks=peakdetect(z,t,lookahead=lookahead,delta=deltas['acc'])
-    
+    z_gyro_peaks=peakdetect(gyro_z,t,lookahead=lookahead,delta=deltas['gyro'])
     ###
     # Test for completion of repitition
     # ...Once all axes have min and max
@@ -205,16 +214,18 @@ def live_peaks(sample,debug=False,dataset='archive',lookahead=4,elim_first_value
     last_prediction=prediction
     prediction=model.predict_proba(rep_data)[0]
     print prediction
-    
+
+
     exerciseType=None
     #once type is determined, find completed peak for dominant axis
     for i in range(len(prediction)): #0=bicep, 1=shoulder, 2= tricep
-        if prediction[i] >.5:
+        if prediction[i] >.8:
             if prediction[i]<last_prediction[i]: return None
             # print i
             if i==2: #tricep - dominant axis is z
-                x_peaks_sofar= sum([1 for i in x_peaks if i!=[]])
-                if x_peaks_sofar<2:
+                # x_peaks_sofar= sum([1 for i in x_peaks if i!=[]])
+                z_gyro_peaks_sofar= sum([1 for i in z_gyro_peaks if i!=[]])
+                if z_gyro_peaks_sofar<2:
                     return None
                 else: exerciseType='tricep'
             elif i==0: #bicep - dominant axis is y
@@ -223,8 +234,11 @@ def live_peaks(sample,debug=False,dataset='archive',lookahead=4,elim_first_value
                     return None
                 else: exerciseType='bicep'
             elif i==1: #shoulder - dominant axis is y
-                y_peaks_sofar= sum([1 for i in y_peaks if i!=[]])
-                if y_peaks_sofar<2:
+                # print len(gyro_z)
+                # print len(t)
+                
+                z_gyro_peaks_sofar= sum([1 for i in z_gyro_peaks if i!=[]])
+                if z_gyro_peaks_sofar<2:
                     return None
                 else: exerciseType='shoulder'
 
@@ -257,18 +271,20 @@ def live_peaks(sample,debug=False,dataset='archive',lookahead=4,elim_first_value
             end=c
             i=t.index(c)
             break
+    adjust_time(i)
+
+def adjust_time(i):
+    global t,x,y,z,gyro_z,gyro_x,gyro_y,magnet_z,magnet_x,magnet_y
     t=t[i:]
     x=x[i:]
     y=y[i:]
     z=z[i:]
-    gyro_x=x[i:]
-    gyro_y=y[i:]
-    gyro_z=z[i:]
-    magnet_x=x[i:]
-    magnet_y=y[i:]
-    magnet_z=z[i:]
-
-
+    gyro_x=gyro_x[i:]
+    gyro_y=gyro_y[i:]
+    gyro_z=gyro_z[i:]
+    magnet_x=magnet_x[i:]
+    magnet_y=magnet_y[i:]
+    magnet_z=magnet_z[i:]
 
 
 def main():
